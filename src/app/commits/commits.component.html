@@ -1,6 +1,8 @@
 <h2>Commits</h2>
 <ul>
-  <li *ngFor="let commit of commits">
+  <li *ngFor="let commit of commits" (click)="onSelect(commit)">
     <span>{{commit.id}}</span> {{commit.message}}
   </li>
 </ul>
+
+<app-commit-details [commit] = "selectedCommit"></app-commit-details>
