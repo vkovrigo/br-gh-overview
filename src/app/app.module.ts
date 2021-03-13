@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { CommitsComponent } from './commits/commits.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CommitsComponent
   ],
   imports: [
     BrowserModule
