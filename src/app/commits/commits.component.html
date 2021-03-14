@@ -2,7 +2,11 @@
 <ul>
   <li *ngFor="let commit of commits">
     <a routerLink="/commits/{{commit.sha}}">
-      <span>{{commit.sha}}</span> {{commit.commit.message}}
+      <span>{{commit.sha}}</span>
     </a>
+    <p>{{ (commit.commit.message.length>80)? (commit.commit.message | slice:0:80)+' ...':(commit.commit.message) }}</p>
+    <p>{{commit.commit.committer.date | date:"short"}}</p>
   </li>
 </ul>
+<button [disabled]="currentPage === 1" (click)="getPrevCommits()">Newer</button>
+<button [disabled]="currentPage === totalPageCount" (click)="getNextCommits()">Older</button>
