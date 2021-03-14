@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Commit } from '../commit';
-import { COMMITS } from '../mock-commits';
+import { RepositoryService } from '../repository.service';
 
 @Component({
   selector: 'app-commits',
@@ -9,16 +9,20 @@ import { COMMITS } from '../mock-commits';
 })
 export class CommitsComponent implements OnInit {
 
-  commits = COMMITS;
+  commits: Commit[] = [];
   selectedCommit?: Commit;
 
-  constructor() { }
+  constructor(private repositoryService: RepositoryService) { }
 
   ngOnInit(): void {
+    this.getCommits();
   }
 
   onSelect(commit: Commit): void {
     this.selectedCommit = commit;
   }
 
+  getCommits(): void {
+    this.repositoryService.getCommits().subscribe(commits => this.commits = commits.commits);
+  }
 }
