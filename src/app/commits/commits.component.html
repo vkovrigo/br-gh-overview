@@ -1,8 +1,8 @@
 <h2>Commits</h2>
 <ul>
-  <li *ngFor="let commit of commits" (click)="onSelect(commit)">
-    <span>{{commit.sha}}</span> {{commit.commit.message}}
+  <li *ngFor="let commit of commits">
+    <a routerLink="/commits/{{commit.sha}}">
+      <span>{{commit.sha}}</span> {{commit.commit.message}}
+    </a>
   </li>
 </ul>
-
-<app-commit-details [commit] = "selectedCommit"></app-commit-details>

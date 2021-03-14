@@ -10,16 +10,11 @@ import { RepositoryService } from '../repository.service';
 export class CommitsComponent implements OnInit {
 
   commits: Commit[] = [];
-  selectedCommit?: Commit;
 
   constructor(private repositoryService: RepositoryService) { }
 
   ngOnInit(): void {
     this.getCommits();
-  }
-
-  onSelect(commit: Commit): void {
-    this.selectedCommit = commit;
   }
 
   getCommits(): void {
