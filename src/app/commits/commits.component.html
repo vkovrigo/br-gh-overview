@@ -1,4 +1,22 @@
 <h2>Commits</h2>
+<div>
+  <form [formGroup]="timeRangeForm" (ngSubmit)="applyTimeRange()">
+    <label>Since: <input required min="1" max="24" formControlName="timeRangeValue" type="number" placeholder="Some period"/></label>
+    <label>
+      <input type="radio" value="hour" formControlName="timeRangeType">
+      Hour
+    </label>
+    <label>
+      <input type="radio" value="month" formControlName="timeRangeType">
+      Month
+    </label>
+    <label>
+      <input type="radio" value="year" formControlName="timeRangeType">
+      Year
+    </label>
+    <button [disabled]="false" type="submit">Apply</button>
+  </form>
+</div>
 <ul>
   <li *ngFor="let commit of commits">
     <a routerLink="/commits/{{commit.sha}}">
