@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { CommitsComponent } from './commits/commits.component';
 import { CommitDetailsComponent } from './commit-details/commit-details.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CommitsFilterComponent } from './commits-filter/commits-filter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommitsComponent,
-    CommitDetailsComponent
+    CommitDetailsComponent,
+    CommitsFilterComponent
   ],
   imports: [
     BrowserModule,

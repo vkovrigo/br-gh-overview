@@ -1,0 +1,16 @@
+<form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+  <label>Since: <input required min="1" max="24" formControlName="timeRangeValue" type="number" placeholder="Some period"/></label>
+  <label>
+    <input type="radio" value="hour" formControlName="timeRangeType">
+    Hour
+  </label>
+  <label>
+    <input type="radio" value="month" formControlName="timeRangeType">
+    Month
+  </label>
+  <label>
+    <input type="radio" value="year" formControlName="timeRangeType">
+    Year
+  </label>
+  <button [disabled]="!isFilterChanged" type="submit">Apply</button>
+</form>
