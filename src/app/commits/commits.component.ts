@@ -27,22 +27,22 @@ export class CommitsComponent implements OnInit {
   }
 
   onFilterApply(timeRange: CommitList['timeRange']) {
-    this.repositoryService.getCommits({ timeRange }).subscribe(commits => this.responseHandler(commits));
+    this.getCommits({ timeRange });
   }
 
   onFilterChange() {
     this.commits = [];
   }
 
-  getCommits(): void {
-    this.repositoryService.getCommits().subscribe(commits => this.responseHandler(commits));
+  getCommits(filter?: { page?: number, timeRange?: CommitList['timeRange'] }): void {
+    this.repositoryService.getCommits(filter).subscribe(commits => this.responseHandler(commits));
   }
 
   goToPrevPage(): void {
-    this.repositoryService.getCommits({ page: this.currentPage - 1 }).subscribe(commits => this.responseHandler(commits));
+    this.getCommits({ page: this.currentPage - 1 });
   }
 
   goToNextPage(): void {
-    this.repositoryService.getCommits({ page: this.currentPage + 1 }).subscribe(commits => this.responseHandler(commits));
+    this.getCommits({ page: this.currentPage + 1 });
   }
 }
