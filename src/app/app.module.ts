@@ -8,13 +8,15 @@ import { CommitsComponent } from './commits/commits.component';
 import { CommitDetailsComponent } from './commit-details/commit-details.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommitsFilterComponent } from './commits-filter/commits-filter.component';
+import { CommitsPaginationComponent } from './commits-pagination/commits-pagination.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommitsComponent,
     CommitDetailsComponent,
-    CommitsFilterComponent
+    CommitsFilterComponent,
+    CommitsPaginationComponent
   ],
   imports: [
     BrowserModule,

@@ -13,5 +13,10 @@
     <p>{{commit.commit.committer.date | date:"short"}}</p>
   </li>
 </ul>
-<button [disabled]="currentPage === 1" (click)="getPrevCommits()">Newer</button>
-<button [disabled]="currentPage === totalPageCount" (click)="getNextCommits()">Older</button>
+<app-commits-pagination
+  *ngIf="commits.length"
+  [currentPage]="currentPage"
+  [totalPageCount]="totalPageCount"
+  (goPrev)="goToPrevPage()"
+  (goNext)="goToNextPage()">
+</app-commits-pagination>

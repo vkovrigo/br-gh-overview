@@ -38,11 +38,11 @@ export class CommitsComponent implements OnInit {
     this.repositoryService.getCommits().subscribe(commits => this.responseHandler(commits));
   }
 
-  getPrevCommits(): void {
+  goToPrevPage(): void {
     this.repositoryService.getCommits({ page: this.currentPage - 1 }).subscribe(commits => this.responseHandler(commits));
   }
 
-  getNextCommits(): void {
+  goToNextPage(): void {
     this.repositoryService.getCommits({ page: this.currentPage + 1 }).subscribe(commits => this.responseHandler(commits));
   }
 }
