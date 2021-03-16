@@ -9,6 +9,7 @@ import { CommitDetailsComponent } from './commit-details/commit-details.componen
 import { AppRoutingModule } from './app-routing.module';
 import { CommitsFilterComponent } from './commits-filter/commits-filter.component';
 import { CommitsPaginationComponent } from './commits-pagination/commits-pagination.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CommitsPaginationComponent } from './commits-pagination/commits-paginat
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
