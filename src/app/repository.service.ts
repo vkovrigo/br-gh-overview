@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Commit, CommitList } from './commit';
 
@@ -12,24 +12,6 @@ const parseLinkHeader = (link?: string) => link?.split(', ').map(l => l.split(';
   }
 }), {});
 
-const generateTimestamp = (timeRange: CommitList['timeRange']) => {
-  const now = new Date();
-
-  switch (timeRange.type) {
-    case 'hour':
-      now.setHours(now.getHours() - timeRange.value);
-      break;
-    case 'month':
-      now.setMonth(now.getMonth() - timeRange.value);
-      break;
-    case 'year':
-      now.setFullYear(now.getFullYear() - timeRange.value);
-      break;
-  }
-
-  return now.toISOString();
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -40,8 +22,7 @@ export class RepositoryService {
   private repositoryOwner = 'facebook';
   private repositoryName = 'react';
   private commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
-  private sinceTimestamp: string
-  private currentTimeRange: CommitList['timeRange'] = { value: 2, type: 'month' };
+  private sinceDate: Date;
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -50,22 +31,22 @@ export class RepositoryService {
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const todayDate = new Date();
 
-  getCommits(filter?: {page?: number, timeRange?: CommitList['timeRange']}): Observable<CommitList> {
-    const { page, timeRange } = filter ?? {};
+    this.sinceDate = new Date(todayDate.setMonth(todayDate.getMonth() - 1));
+  }
+
+  getCommits(filter?: { page?: number, sinceDate?: Date }): Observable<CommitList> {
+    const { page, sinceDate } = filter ?? {};
     this.currentPage = page ?? this.currentPage;
 
-    this.currentTimeRange = timeRange ?? this.currentTimeRange;
-
-    if (!this.sinceTimestamp || timeRange) {
-      this.sinceTimestamp = generateTimestamp(this.currentTimeRange);
-    }
+    this.sinceDate = sinceDate ?? this.sinceDate;
 
     const params = new HttpParams().appendAll({
       page: this.currentPage.toString(),
       per_page: this.perPage.toString(),
-      since: this.sinceTimestamp
+      since: this.sinceDate.toISOString()
     });
 
     return this.http.get<Commit[]>(this.commitsUrl, {
@@ -83,7 +64,7 @@ export class RepositoryService {
           commits: r.body,
           currentPage: this.currentPage,
           totalPageCount: Number.isNaN(lastPage) ? this.currentPage : lastPage,
-          timeRange: this.currentTimeRange,
+          sinceDate: this.sinceDate,
         }
       })
     );

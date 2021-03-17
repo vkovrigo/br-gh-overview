@@ -6,5 +6,5 @@ export type CommitList = {
   commits: Commit[];
   totalPageCount: number;
   currentPage: number;
-  timeRange: { value: number; type: 'hour' | 'month' | 'year' };
+  sinceDate: Date;
 };

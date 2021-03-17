@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { CommitList } from '../commit';
+
+const getDatePart = (date: Date) => date.toISOString().split('T')[0];
 
 @Component({
   selector: 'app-commits-filter',
@@ -8,15 +9,15 @@ import { CommitList } from '../commit';
   styleUrls: ['./commits-filter.component.css']
 })
 export class CommitsFilterComponent implements OnInit {
-  @Input() timeRange;
-  @Output() applied = new EventEmitter<CommitList['timeRange']>();
+  @Input() sinceDate: Date;
+  @Output() applied = new EventEmitter<{ sinceDate: Date }>();
   @Output() changed = new EventEmitter<void>();
 
   isFilterChanged = false;
   filterForm = this.fb.group({
-    timeRangeValue: [],
-    timeRangeType: [],
+    sinceDate: [],
   });
+  maxDate = getDatePart(new Date());
 
   constructor(private fb: FormBuilder) { }
 
@@ -30,16 +31,14 @@ export class CommitsFilterComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     this.filterForm.patchValue({
-      timeRangeValue: changes.timeRange.currentValue?.value,
-      timeRangeType: changes.timeRange.currentValue?.type
+      sinceDate: changes.sinceDate.currentValue && getDatePart(changes.sinceDate.currentValue)
     }, { emitEvent: false });
   }
 
   applyFilter() {
-    const { timeRangeValue, timeRangeType } = this.filterForm.value;
+    const { sinceDate } = this.filterForm.value;
     this.applied.emit({
-      value: timeRangeValue,
-      type: timeRangeType
+      sinceDate: new Date(sinceDate)
     });
 
     this.isFilterChanged = false;
