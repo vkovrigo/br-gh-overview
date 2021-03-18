@@ -23,8 +23,10 @@ export class CommitDetailsComponent implements OnInit {
   }
 
   getCommit(): void {
-    const sha = this.route.snapshot.paramMap.get('sha');
-    this.repositoryService.getCommit(sha).subscribe(commit => this.commit = commit);
+    this.route.paramMap.subscribe(paramMap => {
+      const sha = paramMap.get('sha');
+      this.repositoryService.getCommit(sha).subscribe(commit => this.commit = commit);
+    });
   }
 
   goBack(): void {

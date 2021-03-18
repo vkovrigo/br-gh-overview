@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="commit">
   <mat-card-header>
     <div mat-card-avatar>
       <img src="https://eu.ui-avatars.com/api/?background=random&rounded=true&size=40&name={{commit.commit.author.name}}" alt="avatar"/>
