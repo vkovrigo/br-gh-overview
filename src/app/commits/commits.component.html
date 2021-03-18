@@ -4,19 +4,20 @@
   (applied)="onFilterApply($event)"
   (changed)="onFilterChange()">
 </app-commits-filter>
-<ul>
-  <li *ngFor="let commit of commits">
-    <a routerLink="/commits/{{commit.sha}}">
-      <span>{{commit.sha}}</span>
+<mat-list>
+  <mat-list-item *ngFor="let commit of commits">
+    <a mat-line routerLink="/commits/{{commit.sha}}">
+      <span>{{commit.commit.message}}</span>
     </a>
-    <p>{{ (commit.commit.message.length>80)? (commit.commit.message | slice:0:80)+' ...':(commit.commit.message) }}</p>
-    <p>{{commit.commit.committer.date | date:"short"}}</p>
-  </li>
-</ul>
+    <div mat-line><em>{{commit.commit.author.name}}</em><span>{{commit.commit.author.date | date:"short"}}</span></div>
+    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+  </mat-list-item>
+</mat-list>
 <app-commits-pagination
   *ngIf="commits.length"
   [currentPage]="currentPage"
   [totalPageCount]="totalPageCount"
+  [perPageCount]="perPageCount"
   (goPrev)="goToPrevPage()"
   (goNext)="goToNextPage()">
 </app-commits-pagination>

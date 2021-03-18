@@ -11,6 +11,7 @@ export class CommitsComponent implements OnInit {
   commits: Commit[] = [];
   currentPage: number;
   totalPageCount: number;
+  perPageCount: number;
   sinceDate: Date;
 
   constructor(private repositoryService: RepositoryService) { }
@@ -23,11 +24,12 @@ export class CommitsComponent implements OnInit {
     this.commits = commits.commits;
     this.currentPage = commits.currentPage;
     this.totalPageCount = commits.totalPageCount;
+    this.perPageCount = commits.perPageCount;
     this.sinceDate = commits.sinceDate;
   }
 
   onFilterApply({ sinceDate }) {
-    this.getCommits({ sinceDate });
+    this.getCommits({ page: 1, sinceDate });
   }
 
   onFilterChange() {

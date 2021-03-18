@@ -6,5 +6,6 @@ export type CommitList = {
   commits: Commit[];
   totalPageCount: number;
   currentPage: number;
+  perPageCount: number;
   sinceDate: Date;
 };

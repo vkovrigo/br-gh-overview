@@ -1,7 +1,9 @@
 <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
-  <label>
-    Show commits after the given date
-    <input type="date" name="party" max="{{maxDate}}" required formControlName="sinceDate">
-  </label>
-  <button [disabled]="!isFilterChanged" type="submit">Apply</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Show after the given date</mat-label>
+    <input matInput [max]="maxDate" [matDatepicker]="picker" required formControlName="sinceDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button mat-raised-button color="accent" [disabled]="!isFilterChanged" type="submit">Apply</button>
 </form>

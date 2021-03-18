@@ -64,6 +64,7 @@ export class RepositoryService {
           commits: r.body,
           currentPage: this.currentPage,
           totalPageCount: Number.isNaN(lastPage) ? this.currentPage : lastPage,
+          perPageCount: this.perPage,
           sinceDate: this.sinceDate,
         }
       })

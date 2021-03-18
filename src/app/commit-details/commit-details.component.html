@@ -1,4 +1,21 @@
-<div *ngIf="commit">
-  <p>{{commit.commit.message}}</p>
-  <button (click)="goBack()">go back</button>
-</div>
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <img src="https://eu.ui-avatars.com/api/?background=random&rounded=true&size=40&name={{commit.commit.author.name}}" alt="avatar"/>
+    </div>
+    <mat-card-title>{{commit.commit.author.name}}</mat-card-title>
+    <mat-card-subtitle>{{commit.commit.author.email}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <pre>{{commit.commit.message}}</pre>
+    </div>
+    <div>
+      <div>Committed on {{commit.commit.author.date | date:"full"}}</div>
+      <div>SHA: {{commit.sha}}</div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="goBack()">BACK</button>
+  </mat-card-actions>
+</mat-card>
