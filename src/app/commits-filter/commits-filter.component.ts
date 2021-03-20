@@ -31,7 +31,7 @@ export class CommitsFilterComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     this.filterForm.patchValue({
-      sinceDate: changes.sinceDate.currentValue && getDatePart(changes.sinceDate.currentValue)
+      sinceDate: changes.sinceDate.currentValue && changes.sinceDate.currentValue
     }, { emitEvent: false });
   }
 
