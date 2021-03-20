@@ -21,7 +21,7 @@ export class RepositoryService {
   private perPage = 5;
   private repositoryOwner = 'facebook';
   private repositoryName = 'react';
-  private commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
+  readonly commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
   private sinceDate: Date;
 
   private httpOptions = {
@@ -72,7 +72,7 @@ export class RepositoryService {
   }
 
   getCommit(sha: string): Observable<Commit> {
-    return this.http.get<Commit>(`${this.commitsUrl}/${sha}`).pipe(
+    return this.http.get<Commit>(`${this.commitsUrl}/${sha}`, { headers: this.httpOptions.headers }).pipe(
       map(r => r)
     )
   }
