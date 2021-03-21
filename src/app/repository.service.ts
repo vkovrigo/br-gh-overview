@@ -3,15 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Commit, CommitData, CommitsData } from './commit';
-
-const parseLinkHeader = (link?: string) => link?.split(', ').map(l => l.split('; ')).reduce((acc, [link, rel]) => ({
-  ...acc,
-  [rel.replace(/rel="(.*)"/, '$1')] : {
-    url: link.replace(/<(.*)>/, '$1'),
-    // eslint-disable-next-line max-len
-    params: [...new URLSearchParams(new URL(link.replace(/<(.*)>/, '$1')).search).entries()].reduce((acc, [name, value]) => ({...acc, [name]:value}), {})
-  }
-}), {});
+import { parseLinkHeader } from './parse-link-header';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +43,7 @@ export class RepositoryService {
     }).pipe(
       map<HttpResponse<Commit[]>, CommitsData>(r => {
         const linkHeader = r.headers.get('link');
-        //@ts-expect-error
-        const { last } = parseLinkHeader(linkHeader) ?? {};
+        const { last } = parseLinkHeader(linkHeader);
         const lastPage = Number(last?.params?.page);
 
         return {
