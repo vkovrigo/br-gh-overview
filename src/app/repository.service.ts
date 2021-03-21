@@ -25,15 +25,6 @@ export class RepositoryService {
   commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
   sinceDate: Date;
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      Accept: 'application/vnd.github.v3+json',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      // Authorization: 'token 31ccb07cfdbada499c74c5583f36d6bd5452632b'
-    })
-  };
-
   constructor(private http: HttpClient) {
     const todayDate = new Date();
 
@@ -55,7 +46,7 @@ export class RepositoryService {
 
     return this.http.get<Commit[]>(this.commitsUrl, {
       params,
-      headers: this.httpOptions.headers,
+      headers: this.getHttpHeaders(),
       observe: 'response'
     }).pipe(
       map<HttpResponse<Commit[]>, CommitsData>(r => {
@@ -77,7 +68,7 @@ export class RepositoryService {
   }
 
   getCommit(sha: string): Observable<CommitData> {
-    return this.http.get<Commit>(`${this.commitsUrl}/${sha}`, { headers: this.httpOptions.headers }).pipe(
+    return this.http.get<Commit>(`${this.commitsUrl}/${sha}`, { headers: this.getHttpHeaders() }).pipe(
       map(r => ({ commit: r})),
       catchError(this.handleError<CommitData>(`getCommit/${sha}`))
     );
@@ -91,5 +82,16 @@ export class RepositoryService {
 
       return throwError({ ...result, errorMessage: message } as T);
     };
+  }
+
+  private getHttpHeaders(): HttpHeaders {
+    //@ts-expect-error
+    const token = window.GH_TOKEN as string;
+    return new HttpHeaders({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      Accept: 'application/vnd.github.v3+json',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      ...(token ? { Authorization: `token ${token}` } : {})
+    });
   }
 };
