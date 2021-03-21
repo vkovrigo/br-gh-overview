@@ -48,6 +48,6 @@ TODO:
 - [ ] Add more styles;
 - [ ] Handle network errors;
 - [x] CI;
-- [ ] CD;
+- [x] CD;
 - [ ] Show loader;
 - [ ] Add page to configure repos/user/token
