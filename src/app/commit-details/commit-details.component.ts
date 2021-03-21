@@ -12,6 +12,8 @@ import { RepositoryService } from '../repository.service';
 export class CommitDetailsComponent implements OnInit {
   @Input() commit?: Commit;
 
+  errorMessage: string;
+
   constructor(
     private route: ActivatedRoute,
     private repositoryService: RepositoryService,
@@ -25,7 +27,10 @@ export class CommitDetailsComponent implements OnInit {
   getCommit(): void {
     this.route.paramMap.subscribe(paramMap => {
       const sha = paramMap.get('sha');
-      this.repositoryService.getCommit(sha).subscribe(commit => this.commit = commit);
+      this.repositoryService.getCommit(sha).subscribe(
+        commit => this.commit = commit.commit,
+        error => this.errorMessage = error.errorMessage
+      );
     });
   }
 

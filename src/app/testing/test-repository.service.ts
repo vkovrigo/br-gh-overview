@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { defer, Observable } from 'rxjs';
-import { Commit, CommitList } from '../commit';
+import { Commit, CommitData, CommitsData } from '../commit';
 import { RepositoryService } from '../repository.service';
 import { getTestCommits } from './test-commits';
 
@@ -14,8 +14,8 @@ export class TestRepositoryService extends RepositoryService {
     super(null);
   }
 
-  getCommits(): Observable<CommitList> {
-    return defer(() => Promise.resolve<CommitList>({
+  getCommits(): Observable<CommitsData> {
+    return defer(() => Promise.resolve<CommitsData>({
       commits: this.commits,
       currentPage: 1,
       perPageCount: 5,
@@ -24,7 +24,7 @@ export class TestRepositoryService extends RepositoryService {
     }));
   }
 
-  getCommit(): Observable<Commit> {
-    return defer(() => Promise.resolve<Commit>(this.commits[0]));
+  getCommit(): Observable<CommitData> {
+    return defer(() => Promise.resolve<CommitData>({ commit: this.commits[0] }));
   }
 }

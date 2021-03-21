@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Commit, CommitList } from './commit';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Commit, CommitData, CommitsData } from './commit';
 
 const parseLinkHeader = (link?: string) => link?.split(', ').map(l => l.split('; ')).reduce((acc, [link, rel]) => ({
   ...acc,
@@ -40,7 +40,7 @@ export class RepositoryService {
     this.sinceDate = new Date(todayDate.setMonth(todayDate.getMonth() - 1));
   }
 
-  getCommits(filter?: { page?: number; sinceDate?: Date }): Observable<CommitList> {
+  getCommits(filter?: { page?: number; sinceDate?: Date }): Observable<CommitsData> {
     const { page, sinceDate } = filter ?? {};
     this.currentPage = page ?? this.currentPage;
 
@@ -58,7 +58,7 @@ export class RepositoryService {
       headers: this.httpOptions.headers,
       observe: 'response'
     }).pipe(
-      map<HttpResponse<Commit[]>, CommitList>(r => {
+      map<HttpResponse<Commit[]>, CommitsData>(r => {
         const linkHeader = r.headers.get('link');
         //@ts-expect-error
         const { last } = parseLinkHeader(linkHeader) ?? {};
@@ -71,14 +71,25 @@ export class RepositoryService {
           perPageCount: this.perPage,
           sinceDate: this.sinceDate,
         };
-      })
+      }),
+      catchError(this.handleError<CommitsData>('getCommits'))
     );
   }
 
-  getCommit(sha: string): Observable<Commit> {
+  getCommit(sha: string): Observable<CommitData> {
     return this.http.get<Commit>(`${this.commitsUrl}/${sha}`, { headers: this.httpOptions.headers }).pipe(
-      map(r => r)
+      map(r => ({ commit: r})),
+      catchError(this.handleError<CommitData>(`getCommit/${sha}`))
     );
   }
 
-}
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: HttpErrorResponse): Observable<T> => {
+      console.error(operation, error);
+
+      const message = `server returned code ${error.status} with message "${error.error?.message ?? '<no message>'}"`;
+
+      return throwError({ ...result, errorMessage: message } as T);
+    };
+  }
+};

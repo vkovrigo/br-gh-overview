@@ -45,8 +45,8 @@ TODO:
   entire last year, or just commits since 2 days ago.
 - [ ] Part 4: Testing
   Of course you wrote unit tests for the app you just created. If you did not do so, do it now!
-- [ ] Add more styles;
-- [ ] Handle network errors;
+- [x] Add more styles;
+- [x] Handle network errors;
 - [x] CI;
 - [x] CD;
 - [ ] Show loader;

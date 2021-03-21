@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Commit, CommitList } from '../commit';
+import { Commit, CommitsData } from '../commit';
 import { RepositoryService } from '../repository.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class CommitsComponent implements OnInit {
   sinceDate: Date;
   repositoryName: string;
   repositoryOwner: string;
+  errorMessage: string;
 
   constructor(private repositoryService: RepositoryService) {
     this.repositoryName = repositoryService.repositoryName;
@@ -34,7 +35,9 @@ export class CommitsComponent implements OnInit {
   }
 
   getCommits(filter?: { page?: number; sinceDate?: Date }): void {
-    this.repositoryService.getCommits(filter).subscribe(commits => this.responseHandler(commits));
+    this.repositoryService.getCommits(filter).subscribe (commits => this.responseHandler(commits), (errorData) => {
+      this.errorMessage = errorData.errorMessage;
+    });
   }
 
   goToPrevPage(): void {
@@ -45,7 +48,7 @@ export class CommitsComponent implements OnInit {
     this.getCommits({ page: this.currentPage + 1 });
   }
 
-  private responseHandler(commits: CommitList): void {
+  private responseHandler(commits: CommitsData): void {
     this.commits = commits.commits;
     this.currentPage = commits.currentPage;
     this.totalPageCount = commits.totalPageCount;

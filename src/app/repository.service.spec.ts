@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http/testing';
 
 import { RepositoryService } from './repository.service';
-import { Commit, CommitList } from './commit';
+import { Commit, CommitData } from './commit';
 import { getTestCommits } from './testing/test-commits';
 
 describe('RepositoryService', () => {
@@ -206,7 +206,7 @@ describe('RepositoryService', () => {
     it('should return commit by sha value', () => {
       const sha = 'foo';
       repositoryService.getCommit(sha).subscribe((commit) => {
-        expect(commit).toEqual(expectedCommit);
+        expect(commit).toEqual({ commit: expectedCommit });
       });
 
       const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}/${sha}`);
