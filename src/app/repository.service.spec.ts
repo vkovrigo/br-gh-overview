@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http/testing';
 
 import { RepositoryService } from './repository.service';
-import { Commit, CommitData } from './commit';
+import { Commit, CommitData } from './types';
 import { getTestCommits } from './testing/test-commits';
 
 describe('RepositoryService', () => {

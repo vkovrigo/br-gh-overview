@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Commit } from '../commit';
+import { Commit } from '../types';
 import { RepositoryService } from '../repository.service';
 
 @Component({

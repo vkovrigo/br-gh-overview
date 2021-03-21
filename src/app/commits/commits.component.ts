@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Commit, CommitsData } from '../commit';
+import { Commit, CommitsData } from '../types';
 import { RepositoryService } from '../repository.service';
 
 @Component({

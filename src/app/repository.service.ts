@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Commit, CommitData, CommitsData } from './commit';
+import { Commit, CommitData, CommitsData } from './types';
 import { parseLinkHeader } from './parse-link-header';
 
 @Injectable({

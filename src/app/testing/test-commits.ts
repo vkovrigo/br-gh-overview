@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Commit } from '../commit';
+import { Commit } from '../types';
 
 export const getTestCommits = (): Commit[] => [
   {

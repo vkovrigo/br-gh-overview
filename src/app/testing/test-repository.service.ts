@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { defer, Observable } from 'rxjs';
-import { Commit, CommitData, CommitsData } from '../commit';
+import { Commit, CommitData, CommitsData } from '../types';
 import { RepositoryService } from '../repository.service';
 import { getTestCommits } from './test-commits';
 
