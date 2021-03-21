@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +13,7 @@ describe('CommitsFilterComponent', () => {
   let component: CommitsFilterComponent;
   let fixture: ComponentFixture<CommitsFilterComponent>;
   let loader: HarnessLoader;
-  let mockMaxDate = '2021-12-17';
+  const mockMaxDate = '2021-12-17';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

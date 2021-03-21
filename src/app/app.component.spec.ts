@@ -33,7 +33,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     loader = TestbedHarnessEnvironment.loader(fixture);
-    const toolbar = await loader.getHarness(MatToolbarHarness.with({text: 'Github Repository Overview'}))
+    const toolbar = await loader.getHarness(MatToolbarHarness.with({text: 'Github Repository Overview'}));
     expect(toolbar).toBeDefined();
   });
 });

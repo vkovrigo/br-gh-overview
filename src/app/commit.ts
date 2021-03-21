@@ -1,6 +1,6 @@
-import { Endpoints } from "@octokit/types";
+import { Endpoints } from '@octokit/types';
 
-type ReposCommitListResponse = Endpoints["GET /repos/{owner}/{repo}/commits"]["response"];
+type ReposCommitListResponse = Endpoints['GET /repos/{owner}/{repo}/commits']['response'];
 export type Commit = ReposCommitListResponse['data'][number];
 export type CommitList = {
   commits: Commit[];

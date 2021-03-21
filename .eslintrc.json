@@ -36,7 +36,9 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        // "@angular-eslint/no-shadow": 0,
+        "@typescript-eslint/no-shadow": ["warn"]
       }
     },
     {

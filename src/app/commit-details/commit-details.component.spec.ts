@@ -28,7 +28,7 @@ describe('CommitDetailsComponent', () => {
     fixture = TestBed.createComponent(CommitDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    await fixture.whenStable()
+    await fixture.whenStable();
     // 2nd change detection displays the async-fetched hero
     fixture.detectChanges();
   });

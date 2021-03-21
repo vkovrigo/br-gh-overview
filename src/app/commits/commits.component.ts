@@ -20,14 +20,6 @@ export class CommitsComponent implements OnInit {
     this.getCommits();
   }
 
-  private responseHandler(commits: CommitList): void {
-    this.commits = commits.commits;
-    this.currentPage = commits.currentPage;
-    this.totalPageCount = commits.totalPageCount;
-    this.perPageCount = commits.perPageCount;
-    this.sinceDate = commits.sinceDate;
-  }
-
   onFilterApply({ sinceDate }) {
     this.getCommits({ page: 1, sinceDate });
   }
@@ -36,7 +28,7 @@ export class CommitsComponent implements OnInit {
     this.commits = [];
   }
 
-  getCommits(filter?: { page?: number, sinceDate?: Date }): void {
+  getCommits(filter?: { page?: number; sinceDate?: Date }): void {
     this.repositoryService.getCommits(filter).subscribe(commits => this.responseHandler(commits));
   }
 
@@ -46,5 +38,13 @@ export class CommitsComponent implements OnInit {
 
   goToNextPage(): void {
     this.getCommits({ page: this.currentPage + 1 });
+  }
+
+  private responseHandler(commits: CommitList): void {
+    this.commits = commits.commits;
+    this.currentPage = commits.currentPage;
+    this.totalPageCount = commits.totalPageCount;
+    this.perPageCount = commits.perPageCount;
+    this.sinceDate = commits.sinceDate;
   }
 }

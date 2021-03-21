@@ -8,6 +8,7 @@ const parseLinkHeader = (link?: string) => link?.split(', ').map(l => l.split(';
   ...acc,
   [rel.replace(/rel="(.*)"/, '$1')] : {
     url: link.replace(/<(.*)>/, '$1'),
+    // eslint-disable-next-line max-len
     params: [...new URLSearchParams(new URL(link.replace(/<(.*)>/, '$1')).search).entries()].reduce((acc, [name, value]) => ({...acc, [name]:value}), {})
   }
 }), {});
@@ -21,13 +22,16 @@ export class RepositoryService {
   private perPage = 5;
   private repositoryOwner = 'facebook';
   private repositoryName = 'react';
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
   private sinceDate: Date;
 
   private httpOptions = {
     headers: new HttpHeaders({
-      'Accept': 'application/vnd.github.v3+json',
-      'Authorization': 'token 31ccb07cfdbada499c74c5583f36d6bd5452632b'
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      Accept: 'application/vnd.github.v3+json',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      Authorization: 'token 31ccb07cfdbada499c74c5583f36d6bd5452632b'
     })
   };
 
@@ -37,7 +41,7 @@ export class RepositoryService {
     this.sinceDate = new Date(todayDate.setMonth(todayDate.getMonth() - 1));
   }
 
-  getCommits(filter?: { page?: number, sinceDate?: Date }): Observable<CommitList> {
+  getCommits(filter?: { page?: number; sinceDate?: Date }): Observable<CommitList> {
     const { page, sinceDate } = filter ?? {};
     this.currentPage = page ?? this.currentPage;
 
@@ -45,6 +49,7 @@ export class RepositoryService {
 
     const params = new HttpParams().appendAll({
       page: this.currentPage.toString(),
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       per_page: this.perPage.toString(),
       since: this.sinceDate.toISOString()
     });
@@ -66,7 +71,7 @@ export class RepositoryService {
           totalPageCount: Number.isNaN(lastPage) ? this.currentPage : lastPage,
           perPageCount: this.perPage,
           sinceDate: this.sinceDate,
-        }
+        };
       })
     );
   }
@@ -74,7 +79,7 @@ export class RepositoryService {
   getCommit(sha: string): Observable<Commit> {
     return this.http.get<Commit>(`${this.commitsUrl}/${sha}`, { headers: this.httpOptions.headers }).pipe(
       map(r => r)
-    )
+    );
   }
 
 }

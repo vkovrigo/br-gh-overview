@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController
-} from "@angular/common/http/testing";
+} from '@angular/common/http/testing';
 
 import { RepositoryService } from './repository.service';
 import { Commit, CommitList } from './commit';
@@ -46,13 +46,13 @@ describe('RepositoryService', () => {
     let mockSinceDate: Date;
     const defaultPerPage = 5;
 
-    const buildParams = ({ page, per_page, since }: { page: number; per_page: number; since: string }) =>
-      `page=${page}&per_page=${per_page}&since=${since}`;
+    const buildParams = ({ page, perPage, since }: { page: number; perPage: number; since: string }) =>
+      `page=${page}&per_page=${perPage}&since=${since}`;
 
     beforeEach(() => {
       repositoryService = TestBed.inject(RepositoryService);
       expectedCommits = getTestCommits();
-      mockSinceDate = new Date(mockNowDate.setMonth(mockNowDate.getMonth() - 1))
+      mockSinceDate = new Date(mockNowDate.setMonth(mockNowDate.getMonth() - 1));
     });
 
     it('should return expected commits and all params equal to initial / default values', () => {
@@ -65,7 +65,7 @@ describe('RepositoryService', () => {
         expect(sinceDate.toISOString()).toBe(new Date(mockSinceDate).toISOString());
       });
 
-      const params = buildParams({ page: 1, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+      const params = buildParams({ page: 1, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
       const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
       expect(req.request.method).toEqual('GET');
 
@@ -84,7 +84,7 @@ describe('RepositoryService', () => {
         expect(sinceDate.toISOString()).toBe(new Date(mockSinceDate).toISOString());
       });
 
-      const params = buildParams({ page: newCurrentPage, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+      const params = buildParams({ page: newCurrentPage, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
       const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
       expect(req.request.method).toEqual('GET');
 
@@ -103,7 +103,7 @@ describe('RepositoryService', () => {
         expect(sinceDate.toISOString()).toBe(sinceDate.toISOString());
       });
 
-      const params = buildParams({ page: 1, per_page: defaultPerPage, since: sinceDate.toISOString()})
+      const params = buildParams({ page: 1, perPage: defaultPerPage, since: sinceDate.toISOString()});
       const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
       expect(req.request.method).toEqual('GET');
 
@@ -117,7 +117,7 @@ describe('RepositoryService', () => {
           expect(totalPageCount).toBe(1);
         });
 
-        const params = buildParams({ page: 1, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+        const params = buildParams({ page: 1, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
         const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
         expect(req.request.method).toEqual('GET');
 
@@ -132,7 +132,7 @@ describe('RepositoryService', () => {
           expect(totalPageCount).toBe(page);
         });
 
-        const params = buildParams({ page, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+        const params = buildParams({ page, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
         const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
         expect(req.request.method).toEqual('GET');
 
@@ -141,13 +141,14 @@ describe('RepositoryService', () => {
 
       it('should return total page count equal value in last rel if link exists in header', () => {
         const expectedTotalPageCount = 42;
-        const testLinkInHeader = `<https://api.com/commits?page=2&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="next", <https://api.com/commits?page=${expectedTotalPageCount}&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="last"`
+        // eslint-disable-next-line max-len
+        const testLinkInHeader = `<https://api.com/commits?page=2&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="next", <https://api.com/commits?page=${expectedTotalPageCount}&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="last"`;
         repositoryService.getCommits().subscribe((commitsReq) => {
           const { totalPageCount } = commitsReq;
           expect(totalPageCount).toBe(expectedTotalPageCount);
         });
 
-        const params = buildParams({ page: 1, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+        const params = buildParams({ page: 1, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
         const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
         expect(req.request.method).toEqual('GET');
 
@@ -158,14 +159,15 @@ describe('RepositoryService', () => {
 
       it('should return total page count equal value in last rel if link exists in header', () => {
         const expectedTotalPageCount = 422;
-        const testLinkInHeader = `<https://api.com/commits?page=3&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="next", <https://api.com/commits?page=${expectedTotalPageCount}&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="last", <https://api.com/commits?page=1&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="first", <https://api.com/commits?page=1&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="prev"`
+        // eslint-disable-next-line max-len
+        const testLinkInHeader = `<https://api.com/commits?page=3&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="next", <https://api.com/commits?page=${expectedTotalPageCount}&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="last", <https://api.com/commits?page=1&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="first", <https://api.com/commits?page=1&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="prev"`;
 
         repositoryService.getCommits().subscribe((commitsReq) => {
           const { totalPageCount } = commitsReq;
           expect(totalPageCount).toBe(expectedTotalPageCount);
         });
 
-        const params = buildParams({ page: 1, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+        const params = buildParams({ page: 1, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
         const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
         expect(req.request.method).toEqual('GET');
 
@@ -175,14 +177,14 @@ describe('RepositoryService', () => {
       });
 
       it('should return total page count equal to current page if link last is absent in header', () => {
-        const testLinkInHeader = `<https://api.com/commits?page=2&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="next"`
+        const testLinkInHeader = `<https://api.com/commits?page=2&per_page=5&since=2021-02-20T20%3A32%3A06.581Z>; rel="next"`;
 
         repositoryService.getCommits().subscribe((commitsReq) => {
           const { totalPageCount, currentPage } = commitsReq;
           expect(totalPageCount).toBe(currentPage);
         });
 
-        const params = buildParams({ page: 1, per_page: defaultPerPage, since: mockSinceDate.toISOString()})
+        const params = buildParams({ page: 1, perPage: defaultPerPage, since: mockSinceDate.toISOString()});
         const req = httpTestingController.expectOne(`${repositoryService.commitsUrl}?${params}`);
         expect(req.request.method).toEqual('GET');
 
@@ -190,7 +192,7 @@ describe('RepositoryService', () => {
 
         req.flush(expectedCommits, { headers });
       });
-    })
+    });
   });
 
   describe('getCommit', () => {
@@ -211,6 +213,6 @@ describe('RepositoryService', () => {
       expect(req.request.method).toEqual('GET');
 
       req.flush(expectedCommit);
-    })
+    });
   });
 });

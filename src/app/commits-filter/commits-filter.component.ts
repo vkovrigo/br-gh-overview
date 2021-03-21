@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 const getDatePart = (date: Date) => date.toISOString().split('T')[0];
@@ -8,7 +8,7 @@ const getDatePart = (date: Date) => date.toISOString().split('T')[0];
   templateUrl: './commits-filter.component.html',
   styleUrls: ['./commits-filter.component.css']
 })
-export class CommitsFilterComponent implements OnInit {
+export class CommitsFilterComponent implements OnInit, OnChanges {
   @Input() sinceDate: Date;
   @Output() applied = new EventEmitter<{ sinceDate: Date }>();
   @Output() changed = new EventEmitter<void>();
