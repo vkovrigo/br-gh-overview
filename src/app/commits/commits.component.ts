@@ -13,8 +13,13 @@ export class CommitsComponent implements OnInit {
   totalPageCount: number;
   perPageCount: number;
   sinceDate: Date;
+  repositoryName: string;
+  repositoryOwner: string;
 
-  constructor(private repositoryService: RepositoryService) { }
+  constructor(private repositoryService: RepositoryService) {
+    this.repositoryName = repositoryService.repositoryName;
+    this.repositoryOwner = repositoryService.repositoryOwner;
+  }
 
   ngOnInit(): void {
     this.getCommits();

@@ -1,0 +1,11 @@
+.commit-item .commit-item__text {
+  margin-bottom: 0.5em;
+}
+.commit-item .commit-item__details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.commit-item .commit-item__author {
+  font-weight: 500;
+}

@@ -1,4 +1,4 @@
-<form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+<form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="search-filter">
   <mat-form-field appearance="fill">
     <mat-label>Show after the given date</mat-label>
     <input matInput [max]="maxDate" [matDatepicker]="picker" required formControlName="sinceDate">

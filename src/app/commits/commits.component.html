@@ -1,15 +1,17 @@
-<h2>Commits</h2>
+<h2 class="page-title">Commits from the repository "{{repositoryName}}" of "{{repositoryOwner}}"</h2>
 <app-commits-filter
   [sinceDate]="sinceDate"
   (applied)="onFilterApply($event)"
   (changed)="onFilterChange()">
 </app-commits-filter>
+<mat-divider></mat-divider>
 <mat-list>
-  <mat-list-item *ngFor="let commit of commits">
-    <a mat-line routerLink="/commits/{{commit.sha}}">
-      <span>{{commit.commit.message}}</span>
-    </a>
-    <div mat-line><em>{{commit.commit.author.name}}</em><span>{{commit.commit.author.date | date:"short"}}</span></div>
+  <mat-list-item *ngFor="let commit of commits" class="commit-item">
+    <a mat-line routerLink="/commits/{{commit.sha}}" class="commit-item__text">{{commit.commit.message}}</a>
+    <div mat-line class="commit-item__details">
+      <div class="commit-item__author">{{commit.commit.author.name}}</div>
+      <div class="commit-item__date">{{commit.commit.author.date | date:"short"}}</div>
+    </div>
     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
   </mat-list-item>
 </mat-list>

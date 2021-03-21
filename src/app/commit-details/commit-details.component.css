@@ -1,0 +1,13 @@
+.commit-details__message {
+  white-space: pre-line;
+  font-family: monospace;
+  margin-bottom: 2.5em;
+}
+
+.commit-details__date {
+  margin-bottom: .75em;
+}
+
+.commit-details__label {
+  font-weight: 600;
+}

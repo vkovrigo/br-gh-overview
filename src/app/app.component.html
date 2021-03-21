@@ -1,4 +1,6 @@
-<mat-toolbar color="primary">
-  <span>{{title}}</span>
+<mat-toolbar color="primary" class="page-header">
+  <div class="page-header__title">{{title}}</div>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<main class="page-main">
+  <router-outlet></router-outlet>
+</main>
