@@ -63,7 +63,7 @@ jobs:
           key: node-modules-v4-${{ hashFiles('**/package-lock.json') }}
       - run: npm run test:ci
   build:
-    needs: [lint, test]
+    needs: [install]
     runs-on: ubuntu-latest
 
     strategy:
@@ -81,4 +81,41 @@ jobs:
         with:
           path: node_modules
           key: node-modules-v4-${{ hashFiles('**/package-lock.json') }}
-      - run: npm run build -- --prod
+      - run: npm run build -- --prod --base-href=/br-gh-overview/
+      - name: Archive build
+        if: success()
+        uses: actions/upload-artifact@v1
+        with:
+          name: deploy_dist
+          path: dist
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: node-modules-v4-${{ hashFiles('**/package-lock.json') }}
+      - name: Download build
+        uses: actions/download-artifact@v1
+        with:
+          name: deploy_dist
+      - name: Copy index.html to 404.html
+        run: cp deploy_dist/br-gh-overview/index.html deploy_dist/br-gh-overview/404.html
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: deploy_dist/br-gh-overview
