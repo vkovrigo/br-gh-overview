@@ -1,9 +1,0 @@
-<form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
-  <mat-form-field appearance="fill">
-    <mat-label>Show after the given date</mat-label>
-    <input matInput [max]="maxDate" [matDatepicker]="picker" required formControlName="sinceDate">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <button mat-raised-button color="accent" [disabled]="!isFilterChanged" type="submit">Apply</button>
-</form>
