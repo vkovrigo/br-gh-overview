@@ -47,7 +47,7 @@ TODO:
   Of course you wrote unit tests for the app you just created. If you did not do so, do it now!
 - [ ] Add more styles;
 - [ ] Handle network errors;
-- [ ] CI;
+- [x] CI;
 - [ ] CD;
 - [ ] Show loader;
 - [ ] Add page to configure repos/user/token
