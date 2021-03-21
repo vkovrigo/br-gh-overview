@@ -17,21 +17,20 @@ const parseLinkHeader = (link?: string) => link?.split(', ').map(l => l.split(';
   providedIn: 'root'
 })
 export class RepositoryService {
-  private baseUrl = `https://api.github.com`;
-  private currentPage = 1;
-  private perPage = 5;
-  private repositoryOwner = 'facebook';
-  private repositoryName = 'react';
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  readonly commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
-  private sinceDate: Date;
+  baseUrl = `https://api.github.com`;
+  currentPage = 1;
+  perPage = 5;
+  repositoryOwner = 'facebook';
+  repositoryName = 'react';
+  commitsUrl = `${this.baseUrl}/repos/${this.repositoryOwner}/${this.repositoryName}/commits`;
+  sinceDate: Date;
 
   private httpOptions = {
     headers: new HttpHeaders({
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Accept: 'application/vnd.github.v3+json',
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      Authorization: 'token 31ccb07cfdbada499c74c5583f36d6bd5452632b'
+      // Authorization: 'token 31ccb07cfdbada499c74c5583f36d6bd5452632b'
     })
   };
 
